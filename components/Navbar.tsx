@@ -29,9 +29,12 @@ const Navbar: React.FC = () => {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-serif font-bold italic">
-            S
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 relative flex-shrink-0">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+               <path d="M10 9H21C23.2091 9 25 10.7909 25 13V14C25 16.2091 23.2091 18 21 18H16" stroke="#0F172A" strokeWidth="4" strokeLinecap="round" />
+               <path d="M22 23H11C8.79086 23 7 21.2091 7 19V18C7 15.7909 8.79086 14 11 14H16" stroke="#94A3B8" strokeWidth="4" strokeLinecap="round" style={{ mixBlendMode: 'multiply' }} />
+            </svg>
           </div>
           <span className="font-bold text-lg tracking-tight text-slate-900">
             Smith Studio
