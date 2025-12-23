@@ -64,6 +64,74 @@ const AbstractGraphic = () => (
   </div>
 );
 
+const TypewriterText = ({ text, delay = 0, className = "" }: { text: string, delay?: number, className?: string }) => {
+  const words = text.split(" ");
+
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.15, 
+        delayChildren: delay 
+      }
+    }
+  };
+
+  const wordVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.04
+      }
+    }
+  };
+
+  const charVariants = {
+    hidden: { opacity: 0, y: 12, filter: 'blur(4px)' },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: {
+        type: "spring",
+        damping: 20,
+        stiffness: 90,
+      },
+    },
+  };
+
+  return (
+    <motion.span
+      className={`inline-block ${className}`}
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      aria-label={text}
+    >
+      {words.map((word, i) => (
+        <motion.span 
+          key={i} 
+          variants={wordVariants}
+          className="inline-block whitespace-nowrap mr-[0.25em] last:mr-0"
+          aria-hidden="true"
+        >
+          {word.split("").map((char, j) => (
+            <motion.span 
+              key={j} 
+              variants={charVariants} 
+              className="inline-block"
+            >
+              {char}
+            </motion.span>
+          ))}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+};
+
 const Hero: React.FC = () => {
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
@@ -87,15 +155,14 @@ const Hero: React.FC = () => {
                 </span>
             </motion.div>
             
-            <motion.h1 
-                initial="hidden"
-                animate="visible"
-                variants={fadeInUp}
-                className="text-6xl md:text-7xl lg:text-[5.5rem] leading-[0.95] font-serif font-medium text-slate-900 tracking-tight mb-8"
-            >
-                Turn Print Work <br />
-                <span className="italic text-slate-400">Into Profit.</span>
-            </motion.h1>
+            <h1 className="text-6xl md:text-7xl lg:text-[5.5rem] leading-[0.95] font-serif font-medium text-slate-900 tracking-tight mb-8">
+                <div className="block">
+                  <TypewriterText text="Turn Print Work" delay={0.2} />
+                </div>
+                <div className="block mt-2 sm:mt-0">
+                  <TypewriterText text="Into Profit." delay={1.1} className="italic text-slate-400" />
+                </div>
+            </h1>
 
             <motion.p 
                 initial="hidden"
@@ -113,7 +180,13 @@ const Hero: React.FC = () => {
                 variants={fadeInUp}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center"
             >
-                <Button className="w-full sm:w-auto h-14 text-base px-10">Upload & Get a Quote</Button>
+                <Button 
+                    className="w-full sm:w-auto h-16 text-lg px-12 hover:shadow-2xl hover:shadow-slate-900/40"
+                    whileHover={{ scale: 1.05, y: -4 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                    Upload & Get a Quote
+                </Button>
                 <button className="px-8 py-4 text-sm font-semibold text-slate-900 border-b border-slate-300 hover:border-slate-900 transition-colors">
                     How it works
                 </button>
